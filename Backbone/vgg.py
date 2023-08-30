@@ -1,5 +1,5 @@
 # 搭建VGG16 经典网络结构
-from  torch import  nn
+from torch import nn
 class VGG(nn.Module):
     def __init__(self, num_classes=1000):
         super(VGG, self).__init__()
@@ -11,11 +11,12 @@ class VGG(nn.Module):
             layers += [nn.Conv2d(in_dim, out_dim, 3, 1, 1), nn.ReLU(inplace=True)]
             in_dim = out_dim
             # 在第2、4、7、10、13个卷积层后增加池化层
-            if i==1 or i==3 or i==6 or i==9 or i==12:
+            if i == 1 or i==3 or i==6 or i==9 or i==12:
                 layers += [nn.MaxPool2d(2, 2)]
                 # 第10个卷积后保持和前边的通道数一致，都为512，其余加倍
                 if i!=9:
                     out_dim*=2
+
         self.features = nn.Sequential(*layers)
         # VGGNet的3个全连接层，中间有ReLU与Dropout层
         self.classifier = nn.Sequential(
